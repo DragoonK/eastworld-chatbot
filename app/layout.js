@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "Eastworld International",
-  description: "Study in Australia — Visa, PR Pathways & University Admissions",
+  title: "Brightstar International School of Phnom Penh",
+  description: "Brightstar admissions assistant — fees, curriculum & enrolment",
 };
 
 export default function RootLayout({ children }) {

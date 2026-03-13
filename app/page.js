@@ -1,28 +1,28 @@
 "use client";
-
+ 
 import { useState, useRef, useEffect } from "react";
-
+ 
 const INITIAL_MESSAGE = {
   role: "assistant",
   content:
-    "Hi there! 👋 I'm the Eastworld Assistant — I help Cambodian students explore their options for studying in Australia.\n\nWhether you're thinking about which course to study, how to get a student visa, or how to work toward permanent residency, I'm here to help.\n\nWhat's your name? And what stage are you at — still in school, just graduated, or looking to make a change?",
+    "Hello! 👋 Welcome to Brightstar International School of Phnom Penh.\n\nI'm your admissions assistant — I can help with school fees, our Cambridge curriculum, the enrolment process, and more.\n\nWhat's your name? And which grade level are you enquiring about?\n\n—\n\nសួស្តី! 👋 សូមស្វាគមន៍មកកាន់សាលាអន្តរជាតិ Brightstar។\n\nខ្ញុំអាចជួយអ្នកអំពីថ្លៃសិក្សា កម្មវិធីសិក្សា Cambridge ដំណើរការចុះឈ្មោះ និងព័ត៌មានផ្សេងៗ។",
 };
-
+ 
 export default function Home() {
   const [messages, setMessages] = useState([INITIAL_MESSAGE]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
-
+ 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
+ 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
-
+ 
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
     const userMsg = { role: "user", content: input.trim() };
@@ -30,7 +30,7 @@ export default function Home() {
     setMessages(newMessages);
     setInput("");
     setIsLoading(true);
-
+ 
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -50,14 +50,14 @@ export default function Home() {
         ...prev,
         {
           role: "assistant",
-          content: "I'm having trouble connecting right now. Visit eastworld.com.au to book a free consultation directly!",
+          content: "I'm having trouble connecting right now. Please call 015 905 789 or visit brightstar.edu.kh.",
         },
       ]);
     } finally {
       setIsLoading(false);
     }
   };
-
+ 
   const sendQuickAction = (q) => {
     const userMsg = { role: "user", content: q };
     const newMessages = [...messages, userMsg];
@@ -84,14 +84,14 @@ export default function Home() {
       })
       .finally(() => setIsLoading(false));
   };
-
+ 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     }
   };
-
+ 
   const formatContent = (text) =>
     text.split("\n").map((line, i, arr) => (
       <span key={i}>
@@ -99,22 +99,22 @@ export default function Home() {
         {i < arr.length - 1 && <br />}
       </span>
     ));
-
+ 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap');
-
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+Khmer:wght@400;600&display=swap');
+ 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
         body, html {
-          background: #06080d;
-          color: #e4e8f1;
-          font-family: 'Inter', sans-serif;
+          background: #f5f7fa;
+          color: #1a1a2e;
+          font-family: 'Inter', 'Noto Sans Khmer', -apple-system, sans-serif;
           overflow: hidden;
           height: 100%;
         }
-
+ 
         .page-wrap {
           height: 100vh;
           display: flex;
@@ -123,358 +123,337 @@ export default function Home() {
           position: relative;
           overflow: hidden;
         }
-
-        .bg-grid {
-          position: fixed;
-          inset: 0;
-          background-image:
-            linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
-          background-size: 60px 60px;
-          z-index: 0;
+ 
+        /* Rainbow top bar matching Brightstar's colourful branding */
+        .rainbow-bar {
+          width: 100%;
+          height: 4px;
+          background: linear-gradient(90deg, #e53935, #fb8c00, #fdd835, #43a047, #1e88e5, #8e24aa);
+          flex-shrink: 0;
         }
-
-        .orb {
-          position: fixed;
-          border-radius: 50%;
-          filter: blur(120px);
-          z-index: 0;
-          pointer-events: none;
-        }
-        .orb-1 {
-          width: 500px; height: 500px;
-          background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
-          top: -100px; right: -100px;
-          animation: orbFloat1 12s ease-in-out infinite;
-        }
-        .orb-2 {
-          width: 400px; height: 400px;
-          background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
-          bottom: -80px; left: -80px;
-          animation: orbFloat2 15s ease-in-out infinite;
-        }
-        .orb-3 {
-          width: 300px; height: 300px;
-          background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
-          top: 40%; left: 50%;
-          transform: translateX(-50%);
-          animation: orbFloat3 10s ease-in-out infinite;
-        }
-        @keyframes orbFloat1 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-40px, 30px); } }
-        @keyframes orbFloat2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(30px, -40px); } }
-        @keyframes orbFloat3 { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-30px); } }
-
+ 
         .header {
           width: 100%;
-          padding: 20px 40px;
+          padding: 18px 40px;
           display: flex;
           align-items: center;
           justify-content: space-between;
           z-index: 10;
           position: relative;
           flex-shrink: 0;
+          background: white;
+          border-bottom: 1px solid rgba(0,0,0,0.06);
         }
-        .logo-area {
+ 
+        .logo-wrap {
           display: flex;
           align-items: center;
-          gap: 14px;
+          gap: 12px;
         }
-        .logo-mark {
-          width: 36px; height: 36px;
+ 
+        .logo-icon {
+          width: 40px;
+          height: 40px;
+          background: #1565c0;
           border-radius: 10px;
-          background: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
-          display: flex; align-items: center; justify-content: center;
-          font-size: 16px; font-weight: 700; color: white;
-          font-family: 'Space Grotesk', sans-serif;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 20px;
+          flex-shrink: 0;
         }
+ 
         .logo-text {
-          font-family: 'Space Grotesk', sans-serif;
-          font-size: 18px; font-weight: 600;
-          color: #e4e8f1; letter-spacing: -0.3px;
+          font-size: 14px;
+          font-weight: 700;
+          color: #1565c0;
+          line-height: 1.2;
+          letter-spacing: -0.2px;
         }
-        .logo-text span { color: #38bdf8; }
-
+ 
+        .logo-sub {
+          font-size: 10px;
+          color: #888;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+ 
         .header-link {
-          font-size: 13px;
-          color: rgba(228, 232, 241, 0.5);
+          font-size: 11px;
+          color: #1565c0;
           text-decoration: none;
-          padding: 8px 16px;
-          border: 1px solid rgba(228, 232, 241, 0.1);
-          border-radius: 8px;
-          transition: all 0.3s;
+          padding: 7px 16px;
+          border: 1px solid rgba(21, 101, 192, 0.3);
+          border-radius: 6px;
+          transition: all 0.2s;
           font-family: 'Inter', sans-serif;
+          letter-spacing: 0.3px;
+          font-weight: 500;
+          text-transform: uppercase;
         }
         .header-link:hover {
-          color: #38bdf8;
-          border-color: rgba(56, 189, 248, 0.3);
-          background: rgba(56, 189, 248, 0.05);
+          background: #1565c0;
+          color: white;
+          border-color: #1565c0;
         }
-
+ 
         .main-content {
           flex: 1;
           width: 100%;
-          max-width: 720px;
+          max-width: 700px;
           display: flex;
           flex-direction: column;
           z-index: 10;
           position: relative;
-          padding: 0 24px 24px;
+          padding: 20px 24px 24px;
           min-height: 0;
         }
-
-        .chat-label {
-          text-align: center;
-          margin-bottom: 14px;
-          flex-shrink: 0;
-        }
-        .chat-label h1 {
-          font-family: 'Space Grotesk', sans-serif;
-          font-size: 13px; font-weight: 500;
-          color: rgba(228, 232, 241, 0.35);
-          letter-spacing: 3px;
-          text-transform: uppercase;
-        }
-
+ 
+        /* Chat container */
         .chat-container {
           flex: 1;
           display: flex;
           flex-direction: column;
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.06);
-          border-radius: 20px;
+          background: white;
+          border: 1px solid rgba(0,0,0,0.08);
+          border-radius: 16px;
           overflow: hidden;
-          backdrop-filter: blur(20px);
-          box-shadow:
-            0 0 0 1px rgba(255,255,255,0.03),
-            0 20px 60px rgba(0, 0, 0, 0.4),
-            0 0 120px rgba(56, 189, 248, 0.03);
+          box-shadow: 0 4px 24px rgba(0,0,0,0.08);
           min-height: 0;
         }
-
+ 
+        /* Chat header bar */
         .chat-header {
-          padding: 16px 24px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+          padding: 16px 22px;
+          border-bottom: 1px solid rgba(0,0,0,0.06);
           display: flex;
           align-items: center;
           gap: 14px;
-          background: rgba(255, 255, 255, 0.02);
+          background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
           flex-shrink: 0;
         }
         .chat-avatar {
-          width: 40px; height: 40px; border-radius: 12px;
-          background: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
+          width: 40px; height: 40px; border-radius: 10px;
+          background: #ffc107;
           display: flex; align-items: center; justify-content: center;
-          font-size: 18px; flex-shrink: 0;
+          font-size: 20px; flex-shrink: 0;
         }
         .chat-header-info h2 {
-          font-family: 'Space Grotesk', sans-serif;
-          font-size: 15px; font-weight: 600;
-          color: #e4e8f1; letter-spacing: -0.2px;
+          font-family: 'Inter', sans-serif;
+          font-size: 14px; font-weight: 600;
+          color: white; letter-spacing: 0.2px;
         }
         .chat-header-info p {
-          font-size: 12px;
-          color: rgba(228, 232, 241, 0.4);
-          margin-top: 2px;
+          font-size: 11px;
+          color: rgba(255,255,255,0.65);
+          margin-top: 3px;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
         }
         .status-dot {
-          width: 8px; height: 8px; border-radius: 50%;
-          background: #22c55e;
+          width: 7px; height: 7px; border-radius: 50%;
+          background: #4caf50;
           margin-left: auto;
-          box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
-          animation: statusPulse 2s ease-in-out infinite;
+          box-shadow: 0 0 6px rgba(76,175,80,0.6);
+          animation: statusPulse 2.5s ease-in-out infinite;
         }
-        @keyframes statusPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-
+        @keyframes statusPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+ 
+        /* Messages */
         .messages-area {
           flex: 1;
           overflow-y: auto;
-          padding: 20px 24px;
+          padding: 18px 20px;
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 12px;
           min-height: 0;
+          background: #f8fafc;
         }
-        .messages-area::-webkit-scrollbar { width: 4px; }
+        .messages-area::-webkit-scrollbar { width: 3px; }
         .messages-area::-webkit-scrollbar-track { background: transparent; }
-        .messages-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 10px; }
-
+        .messages-area::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
+ 
         .msg {
           max-width: 80%;
-          padding: 14px 18px;
+          padding: 12px 16px;
           border-radius: 16px;
           font-size: 14px;
-          line-height: 1.6;
+          line-height: 1.65;
           animation: msgIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         @keyframes msgIn {
-          from { opacity: 0; transform: translateY(8px); }
+          from { opacity: 0; transform: translateY(6px); }
           to { opacity: 1; transform: translateY(0); }
         }
         .msg-assistant {
           align-self: flex-start;
-          background: rgba(255, 255, 255, 0.06);
-          border: 1px solid rgba(255, 255, 255, 0.06);
-          color: #c8cdd8;
-          border-bottom-left-radius: 6px;
+          background: white;
+          border: 1px solid rgba(0,0,0,0.07);
+          color: #1a1a2e;
+          border-bottom-left-radius: 4px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         }
         .msg-user {
           align-self: flex-end;
-          background: linear-gradient(135deg, #1d4ed8 0%, #6366f1 100%);
+          background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
           color: white;
-          border-bottom-right-radius: 6px;
-          box-shadow: 0 4px 20px rgba(99, 102, 241, 0.2);
+          font-weight: 500;
+          border-bottom-right-radius: 4px;
         }
-
+ 
+        /* Typing */
         .typing {
           align-self: flex-start;
-          background: rgba(255, 255, 255, 0.06);
-          border: 1px solid rgba(255, 255, 255, 0.06);
+          background: white;
+          border: 1px solid rgba(0,0,0,0.07);
           border-radius: 16px;
-          border-bottom-left-radius: 6px;
-          padding: 16px 22px;
+          border-bottom-left-radius: 4px;
+          padding: 14px 18px;
           display: flex;
-          gap: 6px;
+          gap: 5px;
           align-items: center;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         }
         .dot {
           width: 6px; height: 6px; border-radius: 50%;
-          background: #38bdf8; opacity: 0.4;
+          background: #1565c0; opacity: 0.3;
           animation: dotBounce 1.2s ease-in-out infinite;
         }
         .dot:nth-child(2) { animation-delay: 0.15s; }
         .dot:nth-child(3) { animation-delay: 0.3s; }
         @keyframes dotBounce {
-          0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-          30% { transform: translateY(-6px); opacity: 0.9; }
+          0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
+          30% { transform: translateY(-5px); opacity: 0.8; }
         }
-
+ 
+        /* Quick actions */
         .quick-actions {
           display: flex;
           gap: 8px;
           flex-wrap: wrap;
-          padding: 0 24px 16px;
+          padding: 0 20px 14px;
           flex-shrink: 0;
+          background: #f8fafc;
         }
         .pill {
-          padding: 8px 16px;
+          padding: 7px 14px;
           border-radius: 100px;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          background: rgba(255, 255, 255, 0.03);
-          color: rgba(228, 232, 241, 0.5);
-          font-size: 12.5px;
+          border: 1.5px solid #1565c0;
+          background: transparent;
+          color: #1565c0;
+          font-size: 12px;
+          font-weight: 600;
           cursor: pointer;
-          transition: all 0.25s;
+          transition: all 0.2s;
           font-family: 'Inter', sans-serif;
+          letter-spacing: 0.2px;
         }
         .pill:hover {
-          border-color: rgba(56, 189, 248, 0.3);
-          color: #38bdf8;
-          background: rgba(56, 189, 248, 0.06);
+          background: #1565c0;
+          color: white;
         }
-
+ 
+        /* Input */
         .input-area {
-          padding: 16px 20px 20px;
-          border-top: 1px solid rgba(255, 255, 255, 0.06);
+          padding: 14px 18px 18px;
+          border-top: 1px solid rgba(0,0,0,0.06);
           display: flex;
-          gap: 12px;
+          gap: 10px;
           align-items: flex-end;
-          background: rgba(255, 255, 255, 0.02);
           flex-shrink: 0;
+          background: white;
         }
         .input-area textarea {
           flex: 1;
           resize: none;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 14px;
-          padding: 12px 16px;
+          border: 1.5px solid #e0e3e8;
+          border-radius: 12px;
+          padding: 11px 15px;
           font-size: 14px;
-          font-family: 'Inter', sans-serif;
+          font-family: 'Inter', 'Noto Sans Khmer', sans-serif;
           line-height: 1.5;
           outline: none;
-          min-height: 46px;
+          min-height: 44px;
           max-height: 120px;
-          background: rgba(255, 255, 255, 0.04);
-          color: #e4e8f1;
-          transition: border-color 0.3s, box-shadow 0.3s;
+          background: #f8fafc;
+          color: #1a1a2e;
+          transition: border-color 0.2s;
         }
-        .input-area textarea::placeholder { color: rgba(228, 232, 241, 0.25); }
+        .input-area textarea::placeholder { color: #9ca3af; }
         .input-area textarea:focus {
-          border-color: rgba(56, 189, 248, 0.3);
-          box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.08);
+          border-color: #1565c0;
+          background: white;
         }
-
+ 
         .send-btn {
-          width: 46px; height: 46px; border-radius: 14px;
-          background: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
+          width: 44px; height: 44px; border-radius: 12px;
+          background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
           border: none; cursor: pointer;
           display: flex; align-items: center; justify-content: center;
           flex-shrink: 0;
-          transition: opacity 0.2s, transform 0.15s, box-shadow 0.3s;
-          box-shadow: 0 4px 16px rgba(56, 189, 248, 0.2);
+          transition: opacity 0.2s, transform 0.15s;
         }
-        .send-btn:hover { transform: scale(1.05); box-shadow: 0 4px 24px rgba(56, 189, 248, 0.35); }
-        .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; box-shadow: none; }
-        .send-btn svg { width: 18px; height: 18px; fill: white; }
-
+        .send-btn:hover { transform: scale(1.04); opacity: 0.9; }
+        .send-btn:disabled { opacity: 0.25; cursor: not-allowed; transform: none; }
+        .send-btn svg { width: 17px; height: 17px; fill: white; }
+ 
+        /* Footer */
         .chat-footer {
           text-align: center;
-          padding: 10px;
-          font-size: 11px;
-          color: rgba(228, 232, 241, 0.2);
+          padding: 8px;
+          font-size: 10px;
+          color: #aaa;
           letter-spacing: 0.5px;
-          border-top: 1px solid rgba(255, 255, 255, 0.03);
+          border-top: 1px solid rgba(0,0,0,0.04);
           flex-shrink: 0;
+          background: white;
         }
         .chat-footer a {
-          color: rgba(56, 189, 248, 0.4);
+          color: #1565c0;
           text-decoration: none;
-          transition: color 0.2s;
+          transition: opacity 0.2s;
         }
-        .chat-footer a:hover { color: #38bdf8; }
-
+        .chat-footer a:hover { opacity: 0.7; }
+ 
         @media (max-width: 640px) {
           .header { padding: 14px 16px; }
-          .main-content { padding: 0 10px 10px; }
-          .chat-label { margin-bottom: 8px; }
-          .chat-label h1 { font-size: 11px; letter-spacing: 2px; }
+          .main-content { padding: 10px 10px 10px; }
           .msg { max-width: 88%; font-size: 13.5px; }
           .header-link { display: none; }
-          .quick-actions { padding: 0 16px 12px; }
-          .pill { font-size: 11.5px; padding: 6px 12px; }
+          .quick-actions { padding: 0 14px 12px; }
+          .pill { font-size: 11px; padding: 6px 11px; }
         }
       `}</style>
-
+ 
       <div className="page-wrap">
-        <div className="bg-grid" />
-        <div className="orb orb-1" />
-        <div className="orb orb-2" />
-        <div className="orb orb-3" />
-
+        <div className="rainbow-bar" />
+ 
         <header className="header">
-          <div className="logo-area">
-            <div className="logo-mark">E</div>
-            <div className="logo-text">east<span>world</span></div>
+          <div className="logo-wrap">
+            <div className="logo-icon">⭐</div>
+            <div>
+              <div className="logo-text">Brightstar International</div>
+              <div className="logo-sub">School of Phnom Penh</div>
+            </div>
           </div>
-          <a href="https://eastworld.com.au" className="header-link" target="_blank" rel="noopener noreferrer">
-            eastworld.com.au →
+          <a href="https://brightstar.edu.kh" className="header-link" target="_blank" rel="noopener noreferrer">
+            brightstar.edu.kh
           </a>
         </header>
-
+ 
         <div className="main-content">
-          <div className="chat-label">
-            <h1>AI Student Advisor</h1>
-          </div>
-
           <div className="chat-container">
             <div className="chat-header">
-              <div className="chat-avatar">🎓</div>
+              <div className="chat-avatar">⭐</div>
               <div className="chat-header-info">
-                <h2>Eastworld Assistant</h2>
-                <p>Visa · Courses · PR Pathways · Admissions</p>
+                <h2>Brightstar Assistant</h2>
+                <p>Fees · Admissions · Curriculum · Enrolment</p>
               </div>
               <div className="status-dot" />
             </div>
-
+ 
             <div className="messages-area">
               {messages.map((msg, i) => (
                 <div key={i} className={`msg msg-${msg.role}`}>
@@ -490,14 +469,14 @@ export default function Home() {
               )}
               <div ref={messagesEndRef} />
             </div>
-
+ 
             {messages.length === 1 && (
               <div className="quick-actions">
                 {[
-                  "How do I get a student visa?",
-                  "Best courses for PR",
-                  "Tell me about the 2+2 program",
-                  "Nursing pathway to PR",
+                  "What are the school fees?",
+                  "How do I enrol my child?",
+                  "Tell me about the 2-week free trial",
+                  "What curriculum do you follow?",
                 ].map((q) => (
                   <button key={q} className="pill" onClick={() => sendQuickAction(q)}>
                     {q}
@@ -505,23 +484,23 @@ export default function Home() {
                 ))}
               </div>
             )}
-
+ 
             <div className="input-area">
               <textarea
                 ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Ask about courses, visas, PR pathways..."
+                placeholder="Ask about fees, enrolment, curriculum... / សួរអំពីថ្លៃ ការចុះឈ្មោះ..."
                 rows={1}
               />
               <button className="send-btn" onClick={sendMessage} disabled={!input.trim() || isLoading}>
                 <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" /></svg>
               </button>
             </div>
-
+ 
             <div className="chat-footer">
-              Powered by <a href="https://eastworld.com.au" target="_blank" rel="noopener noreferrer">Eastworld International</a>
+              Powered by <a href="https://brightstar.edu.kh" target="_blank" rel="noopener noreferrer">Brightstar International School of Phnom Penh</a>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
-# Eastworld Chatbot
+# Brightstar Chatbot
 
-AI-powered student advisor for Eastworld International. Built with Next.js + Claude API.
+AI-powered admissions assistant for Brightstar International School of Phnom Penh. Built with Next.js + Claude API.
 
 ## Quick Setup (in Cursor)
 
@@ -20,7 +20,7 @@ Get a key at: https://console.anthropic.com
 ```bash
 npm run dev
 ```
-Open http://localhost:3000 — click the chat bubble in the bottom right.
+Open http://localhost:3000 — use the demo page or click the chat bubble (if you embed the widget) in the bottom right.
 
 ## Deploy to Vercel
 
@@ -38,9 +38,9 @@ vercel
 ```
 Then add your API key in the Vercel dashboard under Environment Variables.
 
-## Embed on eastworld.com.au
+## Embed on your website
 
-Once deployed to Vercel (e.g. at eastworld-chatbot.vercel.app), you can embed the chat widget on your existing site by adding this script to your site's HTML footer:
+Once deployed to Vercel (e.g. at brightstar-chatbot.vercel.app), you can embed the chat widget on your existing site by adding this script to your site's HTML footer:
 
 ```html
 <script>
@@ -54,12 +54,12 @@ Once deployed to Vercel (e.g. at eastworld-chatbot.vercel.app), you can embed th
 </script>
 ```
 
-Or better yet — just copy the `ChatWidget.js` component directly into your existing eastworld.com.au codebase if it's React-based, and import the API route too.
+Or better yet — just copy the `ChatWidget.js` component directly into your existing site codebase if it's React-based, and import the API route too.
 
 ## Project Structure
 
 ```
-eastworld-chatbot/
+brightstar-chatbot/
 ├── app/
 │   ├── api/
 │   │   └── chat/

@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 const INITIAL_MESSAGE = {
   role: "assistant",
   content:
-    "Hi there! 👋 I'm the Eastworld Assistant — I help Cambodian students explore their options for studying in Australia.\n\nWhether you're thinking about which course to study, how to get a student visa, or how to work toward permanent residency, I'm here to help.\n\nWhat's your name? And what stage are you at — still in school, just graduated, or looking to make a change?",
+    "Hello! 👋 I'm the Brightstar Assistant — I help parents learn about Brightstar International School of Phnom Penh.\n\nI can explain school fees, our Cambridge curriculum, the 2-week free trial, and the 5-stage enrolment process.\n\nWhat's your name? And which grade level are you enquiring about?",
 };
 
 export default function ChatWidget() {
@@ -57,7 +57,7 @@ export default function ChatWidget() {
         {
           role: "assistant",
           content:
-            "I'm having trouble connecting right now. Please try again, or visit eastworld.com.au to book a free consultation directly!",
+            "I'm having trouble connecting right now. Please try again, or contact Brightstar directly at 012 408 789 or visit brightstar.edu.kh.",
         },
       ]);
     } finally {
@@ -172,7 +172,7 @@ export default function ChatWidget() {
                   letterSpacing: "-0.01em",
                 }}
               >
-                Eastworld Assistant
+                Brightstar Assistant
               </div>
               <div
                 style={{
@@ -181,7 +181,7 @@ export default function ChatWidget() {
                   marginTop: 2,
                 }}
               >
-                Study in Australia · Visa · PR Pathways
+                Fees · Admissions · Curriculum · Enrolment
               </div>
             </div>
             <button
@@ -300,7 +300,7 @@ export default function ChatWidget() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ask about courses, visas, PR pathways..."
+              placeholder="Ask about fees, enrolment, curriculum..."
               rows={1}
               style={{
                 flex: 1,
@@ -356,7 +356,7 @@ export default function ChatWidget() {
               background: "white",
             }}
           >
-            Powered by Eastworld International
+            Powered by Brightstar International School of Phnom Penh
           </div>
         </div>
       )}
